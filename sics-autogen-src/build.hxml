@@ -1,0 +1,9 @@
+-D cs_ver=6.0
+-D net_ver=45
+-D no-compilation
+-D gen-hx-classes
+-dce no
+-cs csclasses
+-cp .
+-main SicsExternPostfixDummy
+--macro SicsExternPostfix.run("cs.system|microsoft","../sics-autogen", "patches")

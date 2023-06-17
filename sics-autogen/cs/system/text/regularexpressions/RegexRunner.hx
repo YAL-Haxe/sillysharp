@@ -1,0 +1,40 @@
+package cs.system.text.regularexpressions;
+
+@:nativeGen @:abstract @:libType @:csNative @:native("System.Text.RegularExpressions.RegexRunner") extern class RegexRunner {
+	private var runcrawl : cs.NativeArray<Int>;
+	private var runcrawlpos : Int;
+	private var runmatch : Match;
+	private var runregex : Regex;
+	private var runstack : cs.NativeArray<Int>;
+	private var runstackpos : Int;
+	private var runtext : String;
+	private var runtextbeg : Int;
+	private var runtextend : Int;
+	private var runtextpos : Int;
+	private var runtextstart : Int;
+	private var runtrack : cs.NativeArray<Int>;
+	private var runtrackcount : Int;
+	private var runtrackpos : Int;
+	@:protected private function new() : Void;
+	@:protected private function Capture(capnum : Int, start : Int, end : Int) : Void;
+	@:protected private function Crawl(i : Int) : Void;
+	@:protected private function Crawlpos() : Int;
+	@:protected private function DoubleCrawl() : Void;
+	@:protected private function DoubleStack() : Void;
+	@:protected private function DoubleTrack() : Void;
+	@:protected private function EnsureStorage() : Void;
+	@:protected private function FindFirstChar() : Bool;
+	@:protected private function Go() : Void;
+	@:protected private function InitTrackCount() : Void;
+	@:protected private function IsBoundary(index : Int, startpos : Int, endpos : Int) : Bool;
+	@:protected private function IsECMABoundary(index : Int, startpos : Int, endpos : Int) : Bool;
+	@:protected private function IsMatched(cap : Int) : Bool;
+	@:protected private function MatchIndex(cap : Int) : Int;
+	@:protected private function MatchLength(cap : Int) : Int;
+	@:protected private function Popcrawl() : Int;
+	@:protected private function Scan(regex : Regex, text : String, textbeg : Int, textend : Int, textstart : Int, prevlen : Int, quick : Bool) : Match;
+	@:protected private function TransferCapture(capnum : Int, uncapnum : Int, start : Int, end : Int) : Void;
+	@:protected private function Uncapture() : Void;
+	@:protected private static function CharInClass(ch : cs.types.Char16, charClass : String) : Bool;
+	@:protected private static function CharInSet(ch : cs.types.Char16, set : String, category : String) : Bool;
+}

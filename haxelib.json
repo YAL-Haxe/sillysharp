@@ -1,0 +1,12 @@
+{
+	"name": "sillysharp",
+	"url": "https://yal.cc",
+	"license": "",
+	"classPath": "src/",
+	"tags": ["gamemaker"],
+	"description": "An unconventional Haxe->C# target",
+	"version": "0.0.0",
+	"releasenote": "",
+	"contributors": ["YellowAfterlife"],
+	"dependencies": {}
+}

@@ -1,0 +1,8 @@
+-D sics
+-D no-analyzer
+-D use-rtti-doc
+--macro define('sys')
+#--macro define('cs')
+--macro allowPackage('sys')
+--macro allowPackage('cs')
+--macro sf.SfCore.main()

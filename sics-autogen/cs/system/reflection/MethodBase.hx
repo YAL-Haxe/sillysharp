@@ -1,0 +1,62 @@
+package cs.system.reflection;
+
+@:nativeGen @:abstract @:libType @:csNative @:native("System.Reflection.MethodBase") extern class MethodBase extends MemberInfo implements cs.system.runtime.interopservices._MethodBase {
+	var Attributes(get,never) : MethodAttributes;
+	var CallingConvention(get,never) : CallingConventions;
+	var ContainsGenericParameters(get,never) : Bool;
+	var IsAbstract(get,never) : Bool;
+	var IsAssembly(get,never) : Bool;
+	var IsConstructor(get,never) : Bool;
+	var IsFamily(get,never) : Bool;
+	var IsFamilyAndAssembly(get,never) : Bool;
+	var IsFamilyOrAssembly(get,never) : Bool;
+	var IsFinal(get,never) : Bool;
+	var IsGenericMethod(get,never) : Bool;
+	var IsGenericMethodDefinition(get,never) : Bool;
+	var IsHideBySig(get,never) : Bool;
+	var IsPrivate(get,never) : Bool;
+	var IsPublic(get,never) : Bool;
+	var IsSecurityCritical(get,never) : Bool;
+	var IsSecuritySafeCritical(get,never) : Bool;
+	var IsSecurityTransparent(get,never) : Bool;
+	var IsSpecialName(get,never) : Bool;
+	var IsStatic(get,never) : Bool;
+	var IsVirtual(get,never) : Bool;
+	var MethodHandle(get,never) : cs.system.RuntimeMethodHandle;
+	var MethodImplementationFlags(get,never) : MethodImplAttributes;
+	@:protected private function new() : Void;
+	function GetGenericArguments() : cs.NativeArray<cs.system.Type>;
+	function GetMethodBody() : MethodBody;
+	function GetMethodImplementationFlags() : MethodImplAttributes;
+	function GetParameters() : cs.NativeArray<ParameterInfo>;
+	@:overload(function(obj : Dynamic, parameters : cs.NativeArray<Dynamic>) : Dynamic {})
+	@:noCompletion @:skipReflection function Invoke(obj : Dynamic, invokeAttr : BindingFlags, binder : Binder, parameters : cs.NativeArray<Dynamic>, culture : cs.system.globalization.CultureInfo) : Dynamic;
+	function get_Attributes() : MethodAttributes;
+	function get_CallingConvention() : CallingConventions;
+	function get_ContainsGenericParameters() : Bool;
+	function get_IsAbstract() : Bool;
+	function get_IsAssembly() : Bool;
+	function get_IsConstructor() : Bool;
+	function get_IsFamily() : Bool;
+	function get_IsFamilyAndAssembly() : Bool;
+	function get_IsFamilyOrAssembly() : Bool;
+	function get_IsFinal() : Bool;
+	function get_IsGenericMethod() : Bool;
+	function get_IsGenericMethodDefinition() : Bool;
+	function get_IsHideBySig() : Bool;
+	function get_IsPrivate() : Bool;
+	function get_IsPublic() : Bool;
+	function get_IsSecurityCritical() : Bool;
+	function get_IsSecuritySafeCritical() : Bool;
+	function get_IsSecurityTransparent() : Bool;
+	function get_IsSpecialName() : Bool;
+	function get_IsStatic() : Bool;
+	function get_IsVirtual() : Bool;
+	function get_MethodHandle() : cs.system.RuntimeMethodHandle;
+	function get_MethodImplementationFlags() : MethodImplAttributes;
+	static function GetCurrentMethod() : MethodBase;
+	@:overload(function(handle : cs.system.RuntimeMethodHandle) : MethodBase {})
+	static function GetMethodFromHandle(handle : cs.system.RuntimeMethodHandle, declaringType : cs.system.RuntimeTypeHandle) : MethodBase;
+	static function op_Equality(left : MethodBase, right : MethodBase) : Bool;
+	static function op_Inequality(left : MethodBase, right : MethodBase) : Bool;
+}

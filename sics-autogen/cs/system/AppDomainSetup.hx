@@ -1,0 +1,67 @@
+package cs.system;
+
+@:nativeGen @:libType @:csNative @:native("System.AppDomainSetup") extern final class AppDomainSetup implements IAppDomainSetup {
+	var ActivationArguments(get,set) : cs.system.runtime.hosting.ActivationArguments;
+	var AppDomainInitializer(get,set) : AppDomainInitializer;
+	var AppDomainInitializerArguments(get,set) : cs.NativeArray<String>;
+	var ApplicationBase(get,set) : String;
+	var ApplicationName(get,set) : String;
+	var ApplicationTrust(get,set) : cs.system.security.policy.ApplicationTrust;
+	var CachePath(get,set) : String;
+	var ConfigurationFile(get,set) : String;
+	var DisallowApplicationBaseProbing(get,set) : Bool;
+	var DisallowBindingRedirects(get,set) : Bool;
+	var DisallowCodeDownload(get,set) : Bool;
+	var DisallowPublisherPolicy(get,set) : Bool;
+	var DynamicBase(get,set) : String;
+	var LicenseFile(get,set) : String;
+	var LoaderOptimization(get,set) : LoaderOptimization;
+	var PrivateBinPath(get,set) : String;
+	var PrivateBinPathProbe(get,set) : String;
+	var ShadowCopyDirectories(get,set) : String;
+	var ShadowCopyFiles(get,set) : String;
+	@:overload(function() : Void {})
+	@:overload(function(activationContext : ActivationContext) : Void {})
+	function new(activationArguments : cs.system.runtime.hosting.ActivationArguments) : Void;
+	function GetConfigurationBytes() : cs.NativeArray<cs.types.UInt8>;
+	function SetCompatibilitySwitches(switches : cs.system.collections.generic.IEnumerable_1<String>) : Void;
+	function SetConfigurationBytes(value : cs.NativeArray<cs.types.UInt8>) : Void;
+	function get_ActivationArguments() : cs.system.runtime.hosting.ActivationArguments;
+	function get_AppDomainInitializer() : AppDomainInitializer;
+	function get_AppDomainInitializerArguments() : cs.NativeArray<String>;
+	function get_ApplicationBase() : String;
+	function get_ApplicationName() : String;
+	function get_ApplicationTrust() : cs.system.security.policy.ApplicationTrust;
+	function get_CachePath() : String;
+	function get_ConfigurationFile() : String;
+	function get_DisallowApplicationBaseProbing() : Bool;
+	function get_DisallowBindingRedirects() : Bool;
+	function get_DisallowCodeDownload() : Bool;
+	function get_DisallowPublisherPolicy() : Bool;
+	function get_DynamicBase() : String;
+	function get_LicenseFile() : String;
+	function get_LoaderOptimization() : LoaderOptimization;
+	function get_PrivateBinPath() : String;
+	function get_PrivateBinPathProbe() : String;
+	function get_ShadowCopyDirectories() : String;
+	function get_ShadowCopyFiles() : String;
+	function set_ActivationArguments(value : cs.system.runtime.hosting.ActivationArguments) : cs.system.runtime.hosting.ActivationArguments;
+	function set_AppDomainInitializer(value : AppDomainInitializer) : AppDomainInitializer;
+	function set_AppDomainInitializerArguments(value : cs.NativeArray<String>) : cs.NativeArray<String>;
+	function set_ApplicationBase(value : String) : String;
+	function set_ApplicationName(value : String) : String;
+	function set_ApplicationTrust(value : cs.system.security.policy.ApplicationTrust) : cs.system.security.policy.ApplicationTrust;
+	function set_CachePath(value : String) : String;
+	function set_ConfigurationFile(value : String) : String;
+	function set_DisallowApplicationBaseProbing(value : Bool) : Bool;
+	function set_DisallowBindingRedirects(value : Bool) : Bool;
+	function set_DisallowCodeDownload(value : Bool) : Bool;
+	function set_DisallowPublisherPolicy(value : Bool) : Bool;
+	function set_DynamicBase(value : String) : String;
+	function set_LicenseFile(value : String) : String;
+	function set_LoaderOptimization(value : LoaderOptimization) : LoaderOptimization;
+	function set_PrivateBinPath(value : String) : String;
+	function set_PrivateBinPathProbe(value : String) : String;
+	function set_ShadowCopyDirectories(value : String) : String;
+	function set_ShadowCopyFiles(value : String) : String;
+}
