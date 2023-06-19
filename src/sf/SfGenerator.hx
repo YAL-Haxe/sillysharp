@@ -136,13 +136,15 @@ class SfGenerator extends SfGeneratorImpl {
 			case SfCast(x, null): printf(out, "%x", x);
 			//}
 			//{
-			case SfMeta(_, x): printExpr(out, x, flags);
+			case SfMeta(m, x): printExpr(out, x, flags);
 			case SfParenthesis(x): printf(out, "(%w)", x);
 			case SfDynamic(code, args): SicsSyntaxCode.print(out, expr, code, args);
+			//{ special calls
 			case SfCall(x = {def:SfStaticField({realPath:"cs.Lib"}, cf)}, args): {
 				switch (cf.realName) {
 					case "as": out.addFormat("%x as %x", args[0], args[1]);
 					case "fromCharCode": out.addFormat("((char)%x).ToString()", args[0]);
+					case "defaultValue": out.addFormat("default(%mtype)", expr.getType());
 					default: printf(out, "%x(%xargs)", x, args);
 				}
 			};
@@ -159,6 +161,7 @@ class SfGenerator extends SfGeneratorImpl {
 				}
 			};
 			case SfCall({def:SfIdent("__cs__")}, args): SicsSyntaxCode.print(out, expr, null, args);
+			//}
 			case SfCall(x, args): printf(out, "%x(%xargs)", x, args);
 			case SfTrace(d, args): {
 				printf(out, 'System.Console.WriteLine($"%s:%d', d.fileName, d.lineNumber);

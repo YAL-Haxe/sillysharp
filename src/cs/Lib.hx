@@ -10,5 +10,6 @@ extern class Lib {
 	}
 	
 	public static function as<T>(obj:Dynamic, cl:Class<T>):T;
+	public static function defaultValue<T>(?cl:Class<T>):T;
 	public static function fromCharCode(c:Int):String;
 }
