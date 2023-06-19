@@ -229,6 +229,23 @@ class SfGenerator extends SfGeneratorImpl {
 		}
 	}
 	
+	var csFileList:Array<CsOutFile> = [];
+	var csFileMap:Map<String, CsOutFile> = new Map();
+	function csIndexRec(dir:String) {
+		if (!FileSystem.exists(dir)) return;
+		for (file in FileSystem.readDirectory(dir)) {
+			var full = dir + "/" + file;
+			if (FileSystem.isDirectory(full)) {
+				csIndexRec(full);
+				continue;
+			}
+			if (Path.extension(full) != "cs") continue;
+			var csFile = new CsOutFile(full);
+			csFileList.push(csFile);
+			csFileMap[full] = csFile;
+		}
+	}
+	
 	function printType(t:SfType, dir:String) {
 		var impl = new SfBuffer();
 		impl.uses = new SfBufferUses();
@@ -253,15 +270,32 @@ class SfGenerator extends SfGeneratorImpl {
 			dir += "/" + pk;
 			if (!FileSystem.exists(dir)) FileSystem.createDirectory(dir);
 		}
-		File.saveContent(dir + "/" + t.name + ".cs", bh.toString());
+		var full = dir + "/" + t.name + ".cs";
+		var csFile = csFileMap[full];
+		if (csFile != null) csFile.isUsed = true;
+		File.saveContent(full, bh.toString());
 	}
 	override public function printTo(path:String):Void {
 		(new SiCsPascalCase()).apply();
 		if (!FileSystem.exists(path)) FileSystem.createDirectory(path);
+		csIndexRec(path);
 		for (t in typeList) printType(t, path);
+		for (file in csFileList) {
+			if (file.isUsed) continue;
+			try {
+				FileSystem.deleteFile(file.path);
+			} catch (_) {}
+		}
 	}
 	
 	public static function main() {
 		SfConfig.init();
+	}
+}
+private class CsOutFile {
+	public var path:String;
+	public var isUsed:Bool;
+	public function new(path:String) {
+		this.path = path;
 	}
 }
