@@ -36,6 +36,13 @@ class SfGenerator extends SfGeneratorImpl {
 		typeSyntax = typeFindReal("cs.Syntax");
 	}
 	
+	override function getPreproc():SfOptArray {
+		var r = super.getPreproc();
+		r.replace(SfOptCFor, new SicsOptCFor());
+		r.push(new SicsOptArrayForEach());
+		return r;
+	}
+	
 	var _printf = new SicsPrintf();
 	override public function printFormat(out:SfBuffer, fmt:String, val:Dynamic):Bool {
 		return _printf.printf(out, fmt, val);
@@ -217,8 +224,13 @@ class SfGenerator extends SfGeneratorImpl {
 			//{ loops
 			case SfWhile(cond, loop, true): printf(out, "while`%x %sx", cond, loop);
 			case SfCFor(init, cond, post, expr): {
-				printf(out, "for`(%sx;`%w;`%sx)`%sx", init, cond, post, expr);
-			}
+				printf(out, "for`(%sw;`%w;`%sx)`%sx", init, cond, post, expr);
+			};
+			case SfForEach(iter, expr, loop): {
+				printf(out, "foreach`(");
+				out.addMacroTypeName(iter.type);
+				printf(out, " %s in %x)`%sx", iter.name, expr, loop);
+			};
 			case SfContinue: out.addString("continue");
 			case SfBreak: out.addString("break");
 			//}
