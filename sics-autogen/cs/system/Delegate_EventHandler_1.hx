@@ -1,6 +1,6 @@
 package cs.system;
 
-@:nativeGen @:libType @:csNative @:native("System.EventHandler`1") extern final class Delegate_EventHandler_1<T0> extends MulticastDelegate {
+@:nativeGen @:libType @:csNative @:native("System.EventHandler") extern final class Delegate_EventHandler_1<T0> extends MulticastDelegate {
 	function new(object : Dynamic, method : IntPtr) : Void;
 	function BeginInvoke(sender : Dynamic, e : T0, callback : AsyncCallback, object : Dynamic) : IAsyncResult;
 	function EndInvoke(result : IAsyncResult) : Void;

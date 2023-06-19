@@ -1,6 +1,6 @@
 package cs.system.collections.generic;
 
-@:nativeGen @:libType @:csNative @:native("System.Collections.Generic.Stack`1") extern class Stack_1<T0> implements IEnumerable_1<T0> implements cs.system.collections.ICollection implements cs.system.collections.IEnumerable {
+@:nativeGen @:libType @:csNative @:native("System.Collections.Generic.Stack") extern class Stack_1<T0> implements IEnumerable_1<T0> implements cs.system.collections.ICollection implements cs.system.collections.IEnumerable {
 	var Count(get,never) : Int;
 	@:overload(function() : Void {})
 	@:overload(function(collection : IEnumerable_1<T0>) : Void {})

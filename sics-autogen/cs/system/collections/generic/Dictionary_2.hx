@@ -1,6 +1,6 @@
 package cs.system.collections.generic;
 
-@:nativeGen @:libType @:csNative @:native("System.Collections.Generic.Dictionary`2") extern class Dictionary_2<T0,T1> implements IDictionary_2<T0,T1> implements cs.system.collections.IDictionary implements cs.system.runtime.serialization.ISerializable implements cs.system.runtime.serialization.IDeserializationCallback implements IReadOnlyDictionary_2<T0,T1> implements ICollection_1<KeyValuePair_2<T0,T1>> implements IEnumerable_1<KeyValuePair_2<T0,T1>> implements cs.system.collections.IEnumerable implements cs.system.collections.ICollection implements IReadOnlyCollection_1<KeyValuePair_2<T0,T1>> {
+@:nativeGen @:libType @:csNative @:native("System.Collections.Generic.Dictionary") extern class Dictionary_2<T0,T1> implements IDictionary_2<T0,T1> implements cs.system.collections.IDictionary implements cs.system.runtime.serialization.ISerializable implements cs.system.runtime.serialization.IDeserializationCallback implements IReadOnlyDictionary_2<T0,T1> implements ICollection_1<KeyValuePair_2<T0,T1>> implements IEnumerable_1<KeyValuePair_2<T0,T1>> implements cs.system.collections.IEnumerable implements cs.system.collections.ICollection implements IReadOnlyCollection_1<KeyValuePair_2<T0,T1>> {
 	var Comparer(get,never) : IEqualityComparer_1<T0>;
 	var Count(get,never) : Int;
 	@:noCompletion @:skipReflection var Keys(get,never) : Dictionary_2_KeyCollection<T0,T1>;

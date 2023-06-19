@@ -5,6 +5,11 @@ import cs.system.collections.generic.Queue_1;
 import cs.system.collections.generic.Stack_1;
 import cs.system.Decimal;
 import cs.system.Environment;
+import cs.system.BitConverter;
+import cs.system.TimeZoneInfo;
+import cs.system.Console;
+import cs.system.Nullable;
+import cs.system.net.sockets.UdpClient;
 
 class SicsExternPostfixDummy {
 	static function main() {

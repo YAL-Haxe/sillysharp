@@ -1,6 +1,6 @@
 package cs.system;
 
-@:nativeGen @:libType @:csNative @:native("System.Func`1") extern final class Delegate_Func_1<T0> extends MulticastDelegate {
+@:nativeGen @:libType @:csNative @:native("System.Func") extern final class Delegate_Func_1<T0> extends MulticastDelegate {
 	function new(object : Dynamic, method : IntPtr) : Void;
 	function BeginInvoke(callback : AsyncCallback, object : Dynamic) : IAsyncResult;
 	function EndInvoke(result : IAsyncResult) : T0;

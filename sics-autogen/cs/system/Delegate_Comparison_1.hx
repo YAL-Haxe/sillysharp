@@ -1,6 +1,6 @@
 package cs.system;
 
-@:nativeGen @:libType @:csNative @:native("System.Comparison`1") extern final class Delegate_Comparison_1<T0> extends MulticastDelegate {
+@:nativeGen @:libType @:csNative @:native("System.Comparison") extern final class Delegate_Comparison_1<T0> extends MulticastDelegate {
 	function new(object : Dynamic, method : IntPtr) : Void;
 	function BeginInvoke(x : T0, y : T0, callback : AsyncCallback, object : Dynamic) : IAsyncResult;
 	function EndInvoke(result : IAsyncResult) : Int;

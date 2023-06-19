@@ -1,6 +1,6 @@
 package cs.system;
 
-@:nativeGen @:libType @:csNative @:native("System.Converter`2") extern final class Delegate_Converter_2<T0,T1> extends MulticastDelegate {
+@:nativeGen @:libType @:csNative @:native("System.Converter") extern final class Delegate_Converter_2<T0,T1> extends MulticastDelegate {
 	function new(object : Dynamic, method : IntPtr) : Void;
 	function BeginInvoke(input : T0, callback : AsyncCallback, object : Dynamic) : IAsyncResult;
 	function EndInvoke(result : IAsyncResult) : T1;

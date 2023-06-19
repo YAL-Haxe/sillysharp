@@ -73,8 +73,13 @@ class SicsExternPostfix {
 			}
 			if (code == null) {
 				code = File.getContent(full);
+				
+				// @:realPath is forbidden in externs
 				code = ~/@:realPath\(".+?"\) /g.replace(code, "");
-				//code = ~/@:native\(".+?"\) (.*?extern)/g.replace(code, "$1");
+				
+				// @:native("List`1") will include that in generation, and we don't want that
+				// (at least for now)
+				code = ~/(@:native\(".+?)`\d+("\) .*?extern)/g.replace(code, "$1$2");
 				
 				// thank you, System.Threading.Tasks.Task, very cool
 				code = ~/\(function :/g.replace(code, "(_function :");

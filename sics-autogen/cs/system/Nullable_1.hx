@@ -1,6 +1,6 @@
 package cs.system;
 
-@:nativeGen @:struct @:libType @:csNative @:native("System.Nullable`1") extern final class Nullable_1<T0> extends ValueType {
+@:nativeGen @:struct @:libType @:csNative @:native("System.Nullable") extern final class Nullable_1<T0> extends ValueType {
 	var HasValue(get,never) : Bool;
 	var Value(get,never) : T0;
 	function new(value : T0) : Void;

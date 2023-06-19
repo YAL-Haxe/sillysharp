@@ -1,4 +1,4 @@
 package cs.system;
 
-@:nativeGen @:abstract @:libType @:csNative @:native("System.IEquatable`1") extern interface IEquatable_1<T0> {
+@:nativeGen @:abstract @:libType @:csNative @:native("System.IEquatable") extern interface IEquatable_1<T0> {
 }

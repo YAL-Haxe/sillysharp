@@ -1,6 +1,6 @@
 package cs.system.collections.generic;
 
-@:nativeGen @:libType @:csNative @:native("System.Collections.Generic.List`1") extern class List_1<T0> implements IList_1<T0> implements cs.system.collections.IList implements IReadOnlyList_1<T0> implements ICollection_1<T0> implements IEnumerable_1<T0> implements cs.system.collections.IEnumerable implements cs.system.collections.ICollection implements IReadOnlyCollection_1<T0> {
+@:nativeGen @:libType @:csNative @:native("System.Collections.Generic.List") extern class List_1<T0> implements IList_1<T0> implements cs.system.collections.IList implements IReadOnlyList_1<T0> implements ICollection_1<T0> implements IEnumerable_1<T0> implements cs.system.collections.IEnumerable implements cs.system.collections.ICollection implements IReadOnlyCollection_1<T0> {
 	var Capacity(get,set) : Int;
 	var Count(get,never) : Int;
 	@:overload(function() : Void {})

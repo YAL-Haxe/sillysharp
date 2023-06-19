@@ -1,6 +1,6 @@
 package cs.system.reflection;
 
-@:nativeGen @:libType @:csNative @:native("System.Reflection.EventInfo.StaticAddEvent`1") extern final class EventInfo_Delegate_StaticAddEvent_1<T0> extends cs.system.MulticastDelegate {
+@:nativeGen @:libType @:csNative @:native("System.Reflection.EventInfo.StaticAddEvent") extern final class EventInfo_Delegate_StaticAddEvent_1<T0> extends cs.system.MulticastDelegate {
 	function new(object : Dynamic, method : cs.system.IntPtr) : Void;
 	function BeginInvoke(dele : T0, callback : cs.system.AsyncCallback, object : Dynamic) : cs.system.IAsyncResult;
 	function EndInvoke(result : cs.system.IAsyncResult) : Void;

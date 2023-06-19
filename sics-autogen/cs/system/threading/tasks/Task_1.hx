@@ -1,6 +1,6 @@
 package cs.system.threading.tasks;
 
-@:nativeGen @:libType @:csNative @:native("System.Threading.Tasks.Task`1") extern class Task_1<T0> extends Task {
+@:nativeGen @:libType @:csNative @:native("System.Threading.Tasks.Task") extern class Task_1<T0> extends Task {
 	var Result(get,never) : T0;
 	@:overload(function(_function : cs.system.Func_1<T0>) : Void {})
 	@:overload(function(_function : cs.system.Func_2<Dynamic,T0>, state : Dynamic, cancellationToken : cs.system.threading.CancellationToken, creationOptions : TaskCreationOptions) : Void {})

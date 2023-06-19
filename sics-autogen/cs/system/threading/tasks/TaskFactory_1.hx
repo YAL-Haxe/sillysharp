@@ -1,6 +1,6 @@
 package cs.system.threading.tasks;
 
-@:nativeGen @:libType @:csNative @:native("System.Threading.Tasks.TaskFactory`1") extern class TaskFactory_1<T0> {
+@:nativeGen @:libType @:csNative @:native("System.Threading.Tasks.TaskFactory") extern class TaskFactory_1<T0> {
 	var CancellationToken(get,never) : cs.system.threading.CancellationToken;
 	var ContinuationOptions(get,never) : TaskContinuationOptions;
 	var CreationOptions(get,never) : TaskCreationOptions;
