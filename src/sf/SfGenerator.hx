@@ -34,6 +34,11 @@ class SfGenerator extends SfGeneratorImpl {
 	override function typeInit():Void {
 		super.typeInit();
 		typeSyntax = typeFindReal("cs.Syntax");
+		var t:SfType;
+		for (tn in ["Int8", "UInt8", "Int16", "UInt16", "Int64", "UInt64"]) {
+			t = realMap["cs." + tn];
+			if (t != null) t.pack = ["System"];
+		}
 	}
 	
 	override function getPreproc():SfOptArray {
