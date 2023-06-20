@@ -82,13 +82,14 @@ class SfGenerator extends SfGeneratorImpl {
 	
 	public static function isReserved(name:String) {
 		return switch (name) {
-			case "byte", "int", "string", "out": true;
+			case "byte", "int", "string", "out", "extern": true;
 			default: false;
 		}
 	}
 	
 	override public function getVarName(name:String) {
 		if (isReserved(name)) return "@" + name;
+		if (name == "_") return "_q";
 		return name;
 	}
 	
