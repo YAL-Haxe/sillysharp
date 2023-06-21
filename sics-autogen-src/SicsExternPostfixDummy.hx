@@ -10,6 +10,8 @@ import cs.system.TimeZoneInfo;
 import cs.system.Console;
 import cs.system.Nullable;
 import cs.system.net.sockets.UdpClient;
+import cs.system.net.Dns;
+import cs.system.threading.Monitor;
 
 class SicsExternPostfixDummy {
 	static function main() {

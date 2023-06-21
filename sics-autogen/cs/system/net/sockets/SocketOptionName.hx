@@ -1,0 +1,47 @@
+package cs.system.net.sockets;
+
+@:nativeGen @:native("System.Net.Sockets.SocketOptionName") @:csNative extern enum SocketOptionName {
+	DontLinger;
+	ExclusiveAddressUse;
+	Debug;
+	IPOptions;
+	NoDelay;
+	NoChecksum;
+	AcceptConnection;
+	HeaderIncluded;
+	BsdUrgent;
+	Expedited;
+	TypeOfService;
+	ReuseAddress;
+	IpTimeToLive;
+	KeepAlive;
+	MulticastInterface;
+	MulticastTimeToLive;
+	MulticastLoopback;
+	AddMembership;
+	DropMembership;
+	DontFragment;
+	AddSourceMembership;
+	DontRoute;
+	DropSourceMembership;
+	BlockSource;
+	UnblockSource;
+	PacketInformation;
+	ChecksumCoverage;
+	HopLimit;
+	Broadcast;
+	UseLoopback;
+	Linger;
+	OutOfBandInline;
+	SendBuffer;
+	ReceiveBuffer;
+	SendLowWater;
+	ReceiveLowWater;
+	SendTimeout;
+	ReceiveTimeout;
+	Error;
+	Type;
+	UpdateAcceptContext;
+	UpdateConnectContext;
+	MaxConnections;
+}

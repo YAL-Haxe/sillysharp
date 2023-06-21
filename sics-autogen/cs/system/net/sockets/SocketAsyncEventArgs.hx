@@ -1,0 +1,56 @@
+package cs.system.net.sockets;
+
+@:nativeGen @:libType @:csNative @:native("System.Net.Sockets.SocketAsyncEventArgs") extern class SocketAsyncEventArgs extends cs.system.EventArgs implements cs.system.IDisposable {
+	var AcceptSocket(get,set) : Socket;
+	var Buffer(get,never) : cs.NativeArray<cs.types.UInt8>;
+	var BufferList(get,set) : cs.system.collections.generic.IList_1<cs.system.ArraySegment_1<cs.types.UInt8>>;
+	var BytesTransferred(get,never) : Int;
+	@:event @:keep @:skipReflection private var Completed : cs.system.EventHandler_1<SocketAsyncEventArgs>;
+	var ConnectByNameError(get,never) : cs.system.Exception;
+	var Count(get,never) : Int;
+	var DisconnectReuseSocket(get,set) : Bool;
+	var LastOperation(get,never) : SocketAsyncOperation;
+	var Offset(get,never) : Int;
+	var ReceiveMessageFromPacketInfo(get,never) : IPPacketInformation;
+	var RemoteEndPoint(get,set) : cs.system.net.EndPoint;
+	var SendPacketsElements(get,set) : cs.NativeArray<SendPacketsElement>;
+	var SendPacketsFlags(get,set) : TransmitFileOptions;
+	var SendPacketsSendSize(get,set) : Int;
+	var SocketError(get,set) : SocketError;
+	var SocketFlags(get,set) : SocketFlags;
+	var UserToken(get,set) : Dynamic;
+	function new() : Void;
+	function Dispose() : Void;
+	@:protected private function OnCompleted(e : SocketAsyncEventArgs) : Void;
+	@:overload(function(offset : Int, count : Int) : Void {})
+	function SetBuffer(buffer : cs.NativeArray<cs.types.UInt8>, offset : Int, count : Int) : Void;
+	function add_Completed(value : cs.system.EventHandler_1<SocketAsyncEventArgs>) : Void;
+	function get_AcceptSocket() : Socket;
+	function get_Buffer() : cs.NativeArray<cs.types.UInt8>;
+	function get_BufferList() : cs.system.collections.generic.IList_1<cs.system.ArraySegment_1<cs.types.UInt8>>;
+	function get_BytesTransferred() : Int;
+	function get_ConnectByNameError() : cs.system.Exception;
+	function get_Count() : Int;
+	function get_DisconnectReuseSocket() : Bool;
+	function get_LastOperation() : SocketAsyncOperation;
+	function get_Offset() : Int;
+	function get_ReceiveMessageFromPacketInfo() : IPPacketInformation;
+	function get_RemoteEndPoint() : cs.system.net.EndPoint;
+	function get_SendPacketsElements() : cs.NativeArray<SendPacketsElement>;
+	function get_SendPacketsFlags() : TransmitFileOptions;
+	function get_SendPacketsSendSize() : Int;
+	function get_SocketError() : SocketError;
+	function get_SocketFlags() : SocketFlags;
+	function get_UserToken() : Dynamic;
+	function remove_Completed(value : cs.system.EventHandler_1<SocketAsyncEventArgs>) : Void;
+	function set_AcceptSocket(value : Socket) : Socket;
+	function set_BufferList(value : cs.system.collections.generic.IList_1<cs.system.ArraySegment_1<cs.types.UInt8>>) : cs.system.collections.generic.IList_1<cs.system.ArraySegment_1<cs.types.UInt8>>;
+	function set_DisconnectReuseSocket(value : Bool) : Bool;
+	function set_RemoteEndPoint(value : cs.system.net.EndPoint) : cs.system.net.EndPoint;
+	function set_SendPacketsElements(value : cs.NativeArray<SendPacketsElement>) : cs.NativeArray<SendPacketsElement>;
+	function set_SendPacketsFlags(value : TransmitFileOptions) : TransmitFileOptions;
+	function set_SendPacketsSendSize(value : Int) : Int;
+	function set_SocketError(value : SocketError) : SocketError;
+	function set_SocketFlags(value : SocketFlags) : SocketFlags;
+	function set_UserToken(value : Dynamic) : Dynamic;
+}
