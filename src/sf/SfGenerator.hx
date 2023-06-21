@@ -146,10 +146,23 @@ class SfGenerator extends SfGeneratorImpl {
 			case SfLocal(v): printf(out, "%s", v.name);
 			//}
 			//{
+			case SfCall(_.def => SfStaticField({realPath:"Std"}, {realName:"int"}), [
+				_.def => SfBinop(OpDiv, a, b)
+			]) if (a.getType().isHaxeInt() && b.getType().isHaxeInt()): {
+				if (flags.needsWrap()) out.addParOpen();
+				printf(out, "%x`/`%x", a, b);
+				if (flags.needsWrap()) out.addParClose();
+			};
 			case SfBinop(o, a, b): {
+				if (o == OpDiv && a.getType().isHaxeInt() && b.getType().isHaxeInt()) {
+					// Int/Int = Float in Haxe
+					out.addString("(double)");
+				}
 				printf(out, "%x", a);
 				SicsGenOp.printBinOp(out, o, expr);
-				printf(out, "%x", b);
+				if (o.match(OpAssign | OpAssignOp(_))) {
+					printf(out, "%w", b);
+				} else printf(out, "%x", b);
 			};
 			case SfUnop(o, pfx, x): {
 				if (pfx) printf(out, "%x", x);
