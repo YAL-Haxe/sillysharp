@@ -130,14 +130,17 @@ class SfGenerator extends SfGeneratorImpl {
 			};
 			//}
 			//{
+			case SfStaticField(cl, cf) if (cl == currentClass): out.addString(cf.name);
 			case SfStaticField(cl, cf): out.addFieldPathAuto(cf);
 			case SfInstField({def:SfConst(TThis)}, cf): out.addString(cf.name);
 			case SfInstField(x, cf): printf(out, "%x.%s", x, cf.name);
+			case SfClosureField(x, cf): printf(out, "%x.%s", x, cf.name);
 			case SfArrayAccess(x, xi): printf(out, "%x[%x]", x, xi);
 			//
 			case SfVarDecl(v, hasSet, x): {
 				var useVar = hasSet;
 				if (hasSet && x.def.match(SfConst(TNull))) useVar = false;
+				useVar = false;
 				if (useVar) {
 					printf(out, "var %s", v.name);
 				} else printf(out, "%mtype %s", v.type, v.name);
@@ -176,7 +179,19 @@ class SfGenerator extends SfGeneratorImpl {
 				});
 				if (!pfx) printf(out, "%x", x);
 			};
-			case SfCast(x, null): printf(out, "%x", x);
+			#if 0
+			// wow, gee, what a mess, why does the compiler generate casts EVERYWHERE
+			case SfCast(x, null) if (
+				expr.getType().followWithAbstracts().match(TDynamic(null))
+			): { // cast to object? probably wrong
+				out.addExpr(x, flags);
+			};
+			case SfCast(x, null): {
+				out.addFormat("%op0%x as %mtype%op1", flags, x, expr.getType(), flags);
+			};
+			#else
+			case SfCast(x, null): out.addExpr(x, flags);
+			#end
 			//}
 			//{
 			case SfMeta(m, x): printExpr(out, x, flags);
@@ -185,7 +200,9 @@ class SfGenerator extends SfGeneratorImpl {
 			//{ special calls
 			case SfCall(x = {def:SfStaticField({realPath:"cs.Lib"}, cf)}, args): {
 				switch (cf.realName) {
-					case "as": out.addFormat("%x as %x", args[0], args[1]);
+					case "noncast": out.addExpr(args[0], flags);
+					case "typecast": out.addFormat("%op0(%w)%x%op1", flags, args[1], args[0], flags);
+					case "as": out.addFormat("%op0%x as %x%op1", flags, args[0], args[1], flags);
 					case "fromCharCode": out.addFormat("((char)%x).ToString()", args[0]);
 					case "defaultValue": out.addFormat("default(%mtype)", expr.getType());
 					default: printf(out, "%x(%xargs)", x, args);
@@ -204,6 +221,14 @@ class SfGenerator extends SfGeneratorImpl {
 				}
 			};
 			case SfCall({def:SfIdent("__cs__")}, args): SicsSyntaxCode.print(out, expr, null, args);
+			case SfCall({def:SfIdent("__rethrow__")}, _): out.addString("throw");
+			case SfCall({def:SfIdent("__checked__")}, [x]): printf(out, "checked %sx", x);
+			case SfCall({def:SfIdent("__unchecked__")}, [x]): printf(out, "unchecked %sx", x);
+			case SfCall({def:SfIdent("__unsafe__")}, [x]): printf(out, "unsafe %sx", x);
+			case SfCall({def:SfIdent("__lock__")}, [o, b]): printf(out, "lock (%w) %sx", o, b);
+			case SfCall({def:SfIdent("__addressOf__")}, [x]): printf(out, "&%x", x);
+			case SfCall({def:SfIdent("__valueOf__")}, [x]): printf(out, "*%x", x);
+			case SfCall({def:SfIdent("__sizeof__")}, [x]): printf(out, "sizeof(%x)", x);
 			//}
 			//{
 			case SfCall(x = _.def => SfStaticField(_, cf), args)
