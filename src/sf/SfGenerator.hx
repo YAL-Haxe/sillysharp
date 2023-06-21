@@ -49,6 +49,7 @@ class SfGenerator extends SfGeneratorImpl {
 		var r = super.getPreproc();
 		r.replace(SfOptCFor, new SicsOptCFor());
 		r.push(new SicsAvoidAccessorFuncs());
+		r.push(new SicsOptNullable());
 		r.push(new SicsOptArrayForEach());
 		return r;
 	}
