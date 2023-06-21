@@ -205,7 +205,27 @@ class SfGenerator extends SfGeneratorImpl {
 			};
 			case SfCall({def:SfIdent("__cs__")}, args): SicsSyntaxCode.print(out, expr, null, args);
 			//}
+			//{
+			case SfCall(x = _.def => SfStaticField(_, cf), args)
+				|SfCall(x = _.def => SfInstField(_, cf), args)
+			: {
+				printf(out, "%x(", x);
+				var cfArgs = cf.args;
+				for (i => arg in args) {
+					if (i > 0) out.addComma();
+					var cfArg = cfArgs[i];
+					var print = false;
+					if (cfArg != null) switch (cfArg.v.type) {
+						case TType(_.get() => {module:"cs.Out"}, _): printf(out, "out %x", arg);
+						case TType(_.get() => {module:"cs.Ref"}, _): printf(out, "ref %x", arg);
+						default: print = true;
+					} else print = true;
+					if (print) out.addExpr(arg, SfPrintFlags.ExprWrap);
+				}
+				printf(out, ")");
+			};
 			case SfCall(x, args): printf(out, "%x(%xargs)", x, args);
+			//}
 			case SfTrace(d, args): {
 				printf(out, 'System.Console.WriteLine($"%s:%d', d.fileName, d.lineNumber);
 				for (x in args) {
