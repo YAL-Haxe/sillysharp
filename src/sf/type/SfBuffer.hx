@@ -4,6 +4,9 @@ import haxe.extern.Rest;
 import haxe.macro.Context;
 import haxe.macro.Type;
 import haxe.macro.TypeTools;
+import sf.tools.SicsExprTools;
+import sf.tools.SicsTypeTools;
+import sf.type.expr.SfExpr;
 using StringTools;
 
 class SfBuffer extends SfBufferImpl {
@@ -125,7 +128,6 @@ class SfBuffer extends SfBufferImpl {
 		}
 	}
 	public function addMacroTypeName(mt:Type, depth:Int = 0) {
-		mt = TypeTools.followWithAbstracts(mt);
 		if (++depth >= 32) {
 			switch (mt) {
 				case TAbstract(_.get() => at, p): trace(at, p);
@@ -134,6 +136,16 @@ class SfBuffer extends SfBufferImpl {
 			addString("object /* overflow:" + mt + " */");
 			return;
 		}
+		// hm, that's bad, both follow() and followWithAbstracts() discard a Null<>
+		switch (mt) {
+			case TAbstract(_.get() => {module:"StdTypes", name:"Null"}, [p]): {
+				addMacroTypeName(p);
+				if (SicsTypeTools.isCsValueType(p)) addString("?");
+				return;
+			};
+			default:
+		}
+		mt = TypeTools.followWithAbstracts(mt);
 		switch (mt) { // can return
 			case TEnum(_.get() => et, p): addBaseTypeName(et, p);
 			case TInst(_.get() => ct, p): {
@@ -142,6 +154,10 @@ class SfBuffer extends SfBufferImpl {
 						addString(ct.name);
 						return;
 					default:
+				}
+				if (ct.module == "String" && ct.name == "String") {
+					addString("string");
+					return;
 				}
 				if (ct.module == "cs.NativeArray" && ct.name == "NativeArray" && p.length == 1) {
 					addMacroTypeName(p[0]);
