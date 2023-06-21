@@ -6,7 +6,7 @@ using StringTools;
  * ...
  * @author YellowAfterlife
  */
-@:coreApi class Std {
+@:std @:coreApi class Std {
 	@:deprecated('Std.is is deprecated. Use Std.isOfType instead.')
 	public static inline function is(v:Dynamic, t:Dynamic):Bool {
 		return isOfType(v, t);
@@ -36,7 +36,8 @@ using StringTools;
 
 	static inline function isHexadecimalDigit(code:Int):Bool
 		return isDecimalDigit(code) || ('a'.code <= code && code <= 'f'.code) || ('A'.code <= code && code <= 'F'.code);
-
+	
+	@:noCFor
 	public static function parseInt(x:String):Null<Int> {
 		if (x == null)
 			return null;
