@@ -1,4 +1,6 @@
 package sf.tools;
+import haxe.macro.Type;
+import haxe.macro.TypeTools;
 import sf.type.expr.SfExpr;
 import sf.type.expr.SfExprDef;
 using sf.type.expr.SfExprTools;

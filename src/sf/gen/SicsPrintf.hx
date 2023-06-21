@@ -3,6 +3,7 @@ import sf.SfGenerator;
 import sf.type.SfBuffer;
 import sf.type.SfPrintFlags;
 import sf.type.expr.SfExpr;
+using sf.type.expr.SfExprTools;
 
 /**
  * ...
@@ -31,6 +32,18 @@ class SicsPrintf {
 				if (i > 0) out.addComma();
 				out.addExpr(arg, SfPrintFlags.ExprWrap);
 			}
+			return true;
+		};
+		map["sb"] = function(out:SfBuffer, val:Any) {
+			out.addBlockExpr(val);
+			return true;
+		};
+		map["op0"] = function(out:SfBuffer, val:Any) {
+			if ((val:SfPrintFlags).needsWrap()) out.addParOpen();
+			return true;
+		};
+		map["op1"] = function(out:SfBuffer, val:Any) {
+			if ((val:SfPrintFlags).needsWrap()) out.addParClose();
 			return true;
 		};
 	}
