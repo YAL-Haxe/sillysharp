@@ -1,5 +1,9 @@
 package sf.type;
 import haxe.macro.Type;
+import sf.tools.SicsTypeTools;
+import sf.type.expr.SfExpr;
+import sf.type.expr.SfExprDef.*;
+import sf.tools.SicsExprTools;
 import sf.type.SfBuffer;
 import sf.SfCore.*;
 import sf.type.SfClassField;
@@ -32,10 +36,20 @@ class SfClass extends SfClassImpl {
 			}
 			if (SfGenerator.isReserved(fd.name)) fd.name = "@" + fd.name;
 		}
+		for (_tfd in t.overrides) {
+			var tfd = _tfd.get();
+			if (tfd == null) continue;
+			var fd = fieldMap[tfd.name];
+			if (fd == null) continue;
+			fd.isOverride = true;
+		}
 	}
 	override public function printTo(out:SfBuffer, init:SfBuffer):Void {
 		if (isHidden) return;
-		if (pack.length > 0) printf(out, "namespace %s;\n", pack.join("."));
+		if (pack.length > 0) {
+			var _pack = pack.map(sfGenerator.getVarName);
+			printf(out, "namespace %s;\n", _pack.join("."));
+		}
 		var isInterface = classType.isInterface;
 		if (isInterface) {
 			out.addString("interface");
@@ -44,6 +58,13 @@ class SfClass extends SfClassImpl {
 		}
 		printf(out, " %s", name);
 		out.addOptTypeParamsDecl(classType.params);
+		
+		var sup = classType.superClass;
+		if (sup != null) {
+			printf(out, "`:`");
+			out.addBaseTypeName(sup.t.get(), sup.params);
+		}
+		
 		printf(out, " {%(+\n)");
 		
 		var prevClass = sfGenerator.currentClass;
@@ -69,14 +90,27 @@ class SfClass extends SfClassImpl {
 			var isCtr = field == constructor;
 			sfGenerator.currentField = field;
 			var clfd = field.classField;
+			
+			inline function addPublic() {
+				if (clfd.isPublic) {
+					out.addString("public ");
+				} else out.addString("internal ");
+			}
+			
 			switch (field.kind) {
 				case FieldKind.FMethod(mk): {
 					addSep();
-					if (clfd.isPublic) out.addString("public ");
+					addPublic();
 					if (isCtr) {
 						printf(out, "%s", name);
 					} else {
-						if (!field.isInst) out.addString("static ");
+						if (field.isInst) {
+							if (field.isOverride || field.name == "ToString") {
+								out.addString("override ");
+							} else if (!clfd.isFinal && !isInterface) {
+								out.addString("virtual ");
+							}
+						} else out.addString("static ");
 						out.addMacroTypeName(field.type);
 						printf(out, " %s", field.name);
 					}
@@ -94,9 +128,28 @@ class SfClass extends SfClassImpl {
 						if (argSep) out.addComma(); else argSep = true;
 						out.addMacroTypeName(arg.v.type);
 						printf(out, " %s", arg.v.name);
+						if (arg.value != null) {
+							if (arg.value.match(TNull) && SicsTypeTools.isCsValueType(arg.v.type)) {
+								//out.addString("?");
+							}
+							printf(out, "`=`%const", arg.value);
+						}
 					}
 					out.addParClose();
+					
 					if (field.expr != null) {
+						// move base() call to front:
+						var exprs = switch (field.expr.def) {
+							case SfBlock(xs): xs;
+							default: [field.expr];
+						}
+						for (i => x in exprs) {
+							if (!x.def.match(SfCall({def:SfConst(TSuper)}, _))) continue;
+							out.addFormat(" : %x", x);
+							x.def = SfBlock([]);
+							break;
+						}
+						
 						printf(out, "`{%(+\n)");
 						var ol = out.length;
 						printf(out, "%(sw)", field.expr);
@@ -106,12 +159,12 @@ class SfClass extends SfClassImpl {
 				};
 				case FVar(AccInline, AccNever): {
 					addSep();
-					if (clfd.isPublic) out.addString("public ");
+					addPublic();
 					printf(out, "const %mtype %s`=`%x;", field.type, field.name, field.expr);
 				};
-				case FVar(AccNormal, AccNormal): {
+				case FVar(AccNormal, AccNormal|AccNo): {
 					addSep();
-					if (clfd.isPublic) out.addString("public ");
+					addPublic();
 					if (!field.isInst) out.addString("static ");
 					//trace(field.type);
 					printf(out, "%mtype %s", field.type, field.name);
