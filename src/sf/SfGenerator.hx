@@ -227,7 +227,7 @@ class SfGenerator extends SfGeneratorImpl {
 				}
 			};
 			case SfReturn(false, _): printf(out, "return");
-			case SfReturn(true, x): printf(out, "return %sx", x);
+			case SfReturn(true, x): printf(out, "return %w", x);
 			case SfIf(cond, then, hasElse, not): {
 				if (flags.isInline()) {
 					if (hasElse) {
@@ -238,6 +238,24 @@ class SfGenerator extends SfGeneratorImpl {
 			case SfSwitch(expr, cases, hasDefault, xdef): {
 				SicsPrintBranching.printSwitch(out, expr, cases, xdef);
 			}
+			case SfTry(x, cts): {
+				printf(out, "try`%sb", x);
+				for (ct in cts) {
+					printf(out, "`catch`(");
+					if (!SicsTypeTools.isDynamic(ct.v.type)) {
+						out.addMacroTypeName(ct.v.type);
+					} else {
+						// `catch (e:Dynamic)` -> `catch (Exception e)`
+						var tn = "System.Exception";
+						if (out.uses != null) tn = out.uses.shortenFQ(tn, "Exception");
+						out.addString(tn);
+					}
+					if (ct.expr.countLocal(ct.v) > 0) {
+						printf(out, " %s", ct.v.name);
+					}
+					printf(out, ")`%sb", ct.expr);
+				}
+			};
 			//}
 			//{ loops
 			case SfWhile(cond, loop, true): printf(out, "while`%x %sx", cond, loop);

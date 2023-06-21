@@ -66,7 +66,7 @@ class SicsPrintBranching {
 			var x = cc.expr;
 			z = x.isEmpty() ? null : !x.isSmall();
 			if (z != null) {
-				if (z) r.addLine(1); else r.addSep();
+				if (z) printf(r, "`{%(+\n)"); else r.addSep();
 				r.addExpr(x, SfPrintFlags.StatWrap);
 				r.addSemico();
 			}
@@ -75,15 +75,20 @@ class SicsPrintBranching {
 				r.addString("break");
 				r.addSemico();
 			}
-			if (z) r.indent--;
+			if (z) {
+				printf(r, "%(-\n)}");
+			}
 		} // for cases
 		if (cd != null) {
 			if (!cd.isEmpty()) {
 				printf(r, "\ndefault:");
 				z = !cd.isSmall();
 				if (z) r.addLine(1); else r.addSep();
-				r.addExpr(cd, SfPrintFlags.StatWrap);
-				r.addSemico();
+				r.addFormat("%sw;", cd);
+				if (!cd.endsWithExits()) {
+					if (z) r.addLine(0); else r.addSep();
+					r.addFormat("break;");
+				}
 				if (z) r.indent -= 1;
 			}
 		}
