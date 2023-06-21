@@ -5,9 +5,31 @@ import sf.SfCore.*;
 import sf.type.SfClassField;
 
 class SfClass extends SfClassImpl {
+	static function matchVisibility(fd:SfClassField, ref:SfClassField) {
+		if (!fd.classField.isPublic && ref.classField.isPublic) fd.classField.isPublic = true;
+	}
 	public function new(t:ClassType) {
 		super(t);
 		for (fd in fieldList) {
+			switch (fd.kind) {
+				case FVar(read, write): {
+					if (read == AccCall) {
+						var fdGet = realMap["get_" + fd.realName];
+						if (fdGet != null) {
+							fdGet.isGetterOf = fd;
+							matchVisibility(fdGet, fd);
+						}
+					}
+					if (write == AccCall) {
+						var fdSet = realMap["set_" + fd.realName];
+						if (fdSet != null) {
+							fdSet.isSetterOf = fd;
+							matchVisibility(fdSet, fd);
+						}
+					}
+				};
+				default:
+			}
 			if (SfGenerator.isReserved(fd.name)) fd.name = "@" + fd.name;
 		}
 	}
