@@ -39,6 +39,10 @@ class SfGenerator extends SfGeneratorImpl {
 			t = realMap["cs." + tn];
 			if (t != null) t.pack = ["System"];
 		}
+		// not now
+		t = realMap["haxe.iterators.ArrayIterator"];
+		if (t != null) t.isHidden = true;
+		//if (t != null && (typeArray == null)) t.isHidden = true;
 	}
 	
 	override function getPreproc():SfOptArray {
