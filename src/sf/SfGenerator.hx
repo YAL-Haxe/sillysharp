@@ -76,6 +76,18 @@ class SfGenerator extends SfGeneratorImpl {
 				r.addChar(q);
 			};
 			case TSuper: r.addString("base");
+			case TFloat(s): {
+				r.addString(s);
+				if (s.endsWith(".")) {
+					r.addChar("0".code); // `f = 0.` is illegal in C#
+				} else if (s.indexOf(".") < 0 && s.indexOf("e") < 0 && expr != null) {
+					// append .0 if it's a float
+					switch (expr.getType()) {
+						case TAbstract(_.get() => {module:"StdTypes", name:"Float"}, []): r.addString(".0");
+						default:
+					}
+				}
+			};
 			default: super.printConst(r, value, expr);
 		}
 	}
