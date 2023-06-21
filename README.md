@@ -50,7 +50,28 @@ Library code that you would probably just write in C# if you didn't already writ
 </blockquote></details>
 <details><summary>sillysharp output</summary><blockquote>
 
-![](media/send-sics.png)
+![](media/send-sics.png)  
+Pretty much a direct equivalent of the Haxe code.
+
+</blockquote></details>
+</blockquote></details>
+
+<details><summary>A bunch of loops</summary><blockquote>
+<details><summary>Haxe</summary><blockquote>
+
+![](media/equals-hx.png)  
+That's a macro for C-style for-loops.  
+Having used Haxe for a decade, I still think that it should support C-style for-loops natively.
+
+</blockquote></details>
+<details><summary>hxcs output</summary><blockquote>
+
+![](media/equals-hxcs.png)
+
+</blockquote></details>
+<details><summary>sillysharp output</summary><blockquote>
+
+![](media/equals-sics.png)
 
 </blockquote></details>
 </blockquote></details>
