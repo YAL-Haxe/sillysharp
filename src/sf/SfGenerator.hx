@@ -1,8 +1,10 @@
 package sf;
+import haxe.io.Path;
 import haxe.macro.Compiler;
 import haxe.macro.Context;
 import haxe.macro.Expr.Binop;
 import haxe.macro.Type.TConstant;
+import sf.SfGeneratorImpl.SfOptArray;
 import sf.opt.*;
 import sf.gen.*;
 import sf.tools.SicsExprTools;
@@ -17,6 +19,8 @@ import sys.FileSystem;
 import sys.io.File;
 import sf.SfCore.*;
 using sf.type.expr.SfExprTools;
+using sf.tools.SicsTypeTools;
+using haxe.macro.TypeTools;
 using StringTools;
 
 /**
@@ -51,6 +55,7 @@ class SfGenerator extends SfGeneratorImpl {
 		r.push(new SicsAvoidAccessorFuncs());
 		r.push(new SicsOptNullable());
 		r.push(new SicsOptArrayForEach());
+		r.push(new SicsOptString());
 		return r;
 	}
 	
