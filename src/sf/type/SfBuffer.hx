@@ -257,6 +257,7 @@ class SfBuffer extends SfBufferImpl {
 			addLine();
 			addString("/// </summary>");
 		} else {
+			if (rx.match(doc)) doc = rx.matchedRight();
 			addString(doc);
 			addString("</summary>");
 		}
