@@ -44,8 +44,7 @@ class SfClass extends SfClassImpl {
 			fd.isOverride = true;
 		}
 	}
-	override public function printTo(out:SfBuffer, init:SfBuffer):Void {
-		if (isHidden) return;
+	private function printHeader(out:SfBuffer) {
 		if (pack.length > 0) {
 			var _pack = pack.map(sfGenerator.getVarName);
 			printf(out, "namespace %s;\n", _pack.join("."));
@@ -66,6 +65,11 @@ class SfClass extends SfClassImpl {
 		}
 		
 		printf(out, " {%(+\n)");
+	}
+	override public function printTo(out:SfBuffer, init:SfBuffer):Void {
+		if (isHidden) return;
+		var isInterface = classType.isInterface;
+		
 		
 		var prevClass = sfGenerator.currentClass;
 		var prevField = sfGenerator.currentField;
@@ -75,11 +79,20 @@ class SfClass extends SfClassImpl {
 			case KAbstractImpl(_.get() => at): at;
 			default: null;
 		}
+		var hasHeader = false;
+		inline function ensureHeader() {
+			if (hasHeader) return;
+			hasHeader = true;
+			printHeader(out);
+		}
+		// if an abstract implementation class contains nothing inside, we don't want it
+		if (abstractImpl == null) ensureHeader();
 		
 		var sep = false;
 		function printField(out:SfBuffer, init:SfBuffer, field:SfClassField) {
 			if (field.isHidden) return;
 			inline function addSep() {
+				ensureHeader();
 				if (sep) {
 					printf(out, "\n\n");
 				} else {
@@ -181,7 +194,7 @@ class SfClass extends SfClassImpl {
 		for (field in staticList) if (field.kind.match(FVar(_, _))) printField(out, init, field);
 		for (field in staticList) if (field.kind.match(FMethod(_))) printField(out, init, field);
 		
-		printf(out, "%(-\n)}");
+		if (hasHeader) printf(out, "%(-\n)}");
 		sfGenerator.currentClass = prevClass;
 		sfGenerator.currentField = prevField;
 	}
