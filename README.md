@@ -76,6 +76,19 @@ Having used Haxe for a decade, I still think that it should support C-style for-
 </blockquote></details>
 </blockquote></details>
 
+## Setting up
+
+```
+haxelib git sfhx https://github.com/YAL-Haxe/sfhx
+haxelib git sillysharp https://github.com/YAL-Haxe/sillysharp
+```
+Building:
+```
+haxe -lib sfhx -lib sillysharp -dce full -js myDir
+```
+**Note:** any extra `.cs` files inside the output directory will be cleaned up,
+so don't point this at directories with hand-written files inside.
+
 ## Caveats
 
 - Barely any standard library coverage
@@ -90,6 +103,7 @@ Having used Haxe for a decade, I still think that it should support C-style for-
 - Haxe casts (as opposed to `cs.Lib.as`) won't cast anything because I can't figure out how to detect redundant casts (like `abstract X<Int>` being cast to `int` for nothing).
 - Probably two dozen other things that I forgot about because they are not used in the project that
   I'm making this for.
+
 
 ## Challenges
 
