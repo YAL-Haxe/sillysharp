@@ -52,6 +52,8 @@ class SfClass extends SfClassImpl {
 		var isInterface = classType.isInterface;
 		if (isInterface) {
 			out.addString("interface");
+		} else if (meta.has(":struct")) {
+			out.addString("struct");
 		} else {
 			out.addString("class");
 		}
